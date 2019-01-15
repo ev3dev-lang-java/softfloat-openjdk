@@ -1,24 +1,27 @@
+SoftFloat-3e for OpenJDK
+========================
 
-Package Overview for Berkeley SoftFloat Release 3e
-==================================================
+This is a [SoftFloat-3e](http://www.jhauser.us/arithmetic/SoftFloat.html)
+library with additional build files targetting Linux armel.
+The intent behind this repository is to make building SoftFloat for
+OpenJDK on `arm-sflt` ABI easier.
 
-John R. Hauser<br>
-2018 January 20
+Why
+---
+Software floating point math implementation on Linux on ARM
+slightly prefers performance over precision of calculations.
+This presented an issue for Java JCK - these imprecisions were
+detected. The solution chosen by Java developers was to use
+SoftFloat-2b library for the problematic operations.
 
+This repository provides an updated SoftFloat-3e library for new
+versions of OpenJDK, where SoftFloat support is added once again.
+(see [JDK-8215902](https://bugs.openjdk.java.net/browse/JDK-8215902)).
 
-Berkeley SoftFloat is a software implementation of binary floating-point
-that conforms to the IEEE Standard for Floating-Point Arithmetic.  SoftFloat
-is distributed in the form of C source code.  Building the SoftFloat sources
-generates a library file (typically `softfloat.a` or `libsoftfloat.a`)
-containing the floating-point subroutines.
-
-
-The SoftFloat package is documented in the following files in the `doc`
-subdirectory:
-
-* [SoftFloat.html](http://www.jhauser.us/arithmetic/SoftFloat-3/doc/SoftFloat.html) Documentation for using the SoftFloat functions.
-* [SoftFloat-source.html](http://www.jhauser.us/arithmetic/SoftFloat-3/doc/SoftFloat-source.html) Documentation for building SoftFloat.
-* [SoftFloat-history.html](http://www.jhauser.us/arithmetic/SoftFloat-3/doc/SoftFloat-history.html) History of the major changes to SoftFloat.
-
-Other files in the package comprise the source code for SoftFloat.
-
+How to use
+----------
+1. Install a suitable Linux ARM compiler and ensure that `arm-linux-gnueabi-gcc` executable exists.
+2. Go to `build/Linux-ARM-VFPv2-GCC-OpenJDK`.
+3. Run `make`
+4. Run `make DESTDIR=... install`
+5. Configure OpenJDK with `--with-sflt=...` pointing to DESTDIR.
